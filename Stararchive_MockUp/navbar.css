@@ -1,0 +1,142 @@
+@font-face {
+    font-family:'StarJedi';
+    src: local('Star Wars'), url('https://fonts.cdnfonts.com/s/88396/Star Wars.woff') format('woff');
+    
+  }
+
+/* @import url('https://fonts.cdnfonts.com/css/star-wars'); */
+
+
+
+header{
+    background-color: black;
+    color:white;
+}
+
+#text_star_archive{
+  text-decoration: none;
+  text-align: center;
+  color: yellow;
+  font-family: 'Star Wars';
+  font-size:30pt;
+  width:auto;
+  padding:4%;
+}
+
+
+
+#nav{
+    padding:30px 30px;
+    background-image:url("Images/Saberfight.jpg"); 
+    background-position-y:30%;
+    background-size:cover;
+    background-repeat:no-repeat;
+    height:100px;
+    transition-duration: 0.1s;
+   
+  
+}
+
+
+
+#nav button{
+    background-color:rgba(128, 128, 128, 0.427);
+    float: left;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    /*display: inline-block;*/
+    font-size: 16px;
+    
+}
+
+#nav button:hover{
+    background-color:black;
+    transition-duration: 0.2s;
+}
+
+
+
+#logo-gif {
+    display: none;
+  }
+  #logobar:hover #logo-static {
+    display: none; 
+  }
+  #logobar:hover #logo-gif {
+    display: block;
+  }
+
+
+.imagething{
+  padding:0;
+}
+
+#icons {  
+    width: 50%;
+    display:flex;
+    justify-content: flex-end;
+    gap: 10%;
+    margin-right:20px;
+    align-items: center;
+}
+
+#icons img{
+  width: 50%; 
+  height: auto;
+}
+
+#icons a {
+    /*display: flex;*/
+    align-items: center;
+    justify-content:left;
+    gap:0;
+  }
+  
+  #star_archive {
+    margin-top: 0; 
+    margin-left:5%;
+  }
+                                    /*Logobar*/
+#logobar {
+    background-color: black;
+    /*margin_left:40px;*/
+    justify-content: space-between;
+    display:flex;
+}
+#logobar img{
+    width: 20%;
+}
+
+#star_archive {
+   padding-left:20px;
+   color:yellow;
+   font-family: 'Star Wars', sans-serif;
+   font-size:20px;
+
+}
+
+/*Star archive text size change*/
+
+@media screen and (min-width: 1000px) {
+    
+    #star_archive {
+      font-size: 40px;
+    }
+
+  }
+
+
+  /*icons size change*/
+
+  @media screen and (max-width: 550px) {
+    
+    #icons img{
+      width: 80%;
+      justify-content: center; /* Center the icons horizontally */
+    }
+  }
+
+
+
