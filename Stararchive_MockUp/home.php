@@ -9,10 +9,14 @@ function close(){
       }
   }
   
-  function locate(location,element){ 
-    if(location && element == null){
-      return location;  
-    }}
+  let set_location = "";
+  let set_value = "";
+
+
+  function locate(location , value){ 
+      set_location = location; 
+      set_value = value;
+    }
   
   function getFiles(formQuestion,location){
     close();
@@ -45,9 +49,9 @@ function close(){
     return formQuestion
 }
 
-function autofill(value) {
-    document.getElementById('char_name').value = value;
-    document.getElementById('txtHint_char_name').innerHTML = "";
+function autofill(valueOfAutofill) {
+  let location_of_element = (set_location.split("," )[1]);
+  document.getElementById(location_of_element).innerHTML = ("<p>" + valueOfAutofill + "</p>");
 }
 
 var formQuestion = getFiles();
