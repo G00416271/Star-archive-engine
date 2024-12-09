@@ -46,6 +46,17 @@ if ($conn->connect_error) {
 //   echo "Error creating database: " . $conn->error;
 // }
 
+ // Drop database if exists                   //This block can delete databases? the sql querey i think "DROP DATABASES IF EXISTS"
+ $sql = "DROP DATABASE IF EXISTS stararchivedb";
+ if ($conn->query($sql) === TRUE) {
+   echo "Database dropped successfully<br>";
+ } else {
+   echo "Error creating database: " . $conn->error;
+ }
+
+
+
+
 // Create database
 $sql = "CREATE DATABASE stararchivedb";
 if ($conn->query($sql) === TRUE) {
@@ -85,27 +96,6 @@ if ($conn->query($sql) === TRUE) {
   echo "Error creating table: " . $conn->error;
 }
 
-// sql to create CHARACTERS table
-$sql = "CREATE TABLE Characters (
-  character_id INT AUTO_INCREMENT PRIMARY KEY,
-  char_name VARCHAR(50) UNIQUE NOT NULL,
-  species_name VARCHAR(100)  NOT NULL,
-  planet_name VARCHAR(50) NULL,
-  religion_name VARCHAR(50) NULL,
-  droid_name VARCHAR(50) NULL,
-  movie_name VARCHAR(50) NULL
-  
-) ENGINE=InnoDB;
-";
-
-if ($conn->query($sql) === TRUE) {
-  echo "Table created successfully<br>";
-} else {
-  echo "Error creating table: " . $conn->error;
-}
-
-
-
 // sql to create PLANETS table
 
 $sql = "CREATE TABLE Planets (
@@ -122,9 +112,6 @@ if ($conn->query($sql) === TRUE) {
 }
 
 
-
-// sql to create SPECIES table
-
 $sql = "CREATE TABLE Species (
   species_Id INT AUTO_INCREMENT PRIMARY KEY,
   species_name VARCHAR(30) UNIQUE NOT NULL,
@@ -137,63 +124,11 @@ if ($conn->query($sql) === TRUE) {
   echo "Error creating table: " . $conn->error;
 }
 
-
-
 //sql to create religions table
 
 $sql = "CREATE TABLE religion (
-  religion_id INT AUTO_INCREMENT PRIMARY KEY,
+  religion_id INT AUTO_INCREMENT PRIMARY KEY, 
   religion_name VARCHAR(30) NOT NULL
-) ENGINE=InnoDB;
-";
-
-
-if ($conn->query($sql) === TRUE) {
-  echo "Table created successfully<br>";
-} else {
-  echo "Error creating table: " . $conn->error;
-}
-
-
-//Ship models
-
-$sql = "CREATE TABLE ship_models (
-  ship_id INT AUTO_INCREMENT PRIMARY KEY,
-  ship_name VARCHAR(50) NOT NULL,
-  pilot_name VARCHAR(50) NOT NULL
-) ENGINE=InnoDB;";
-
-if ($conn->query($sql) === TRUE) {
-  echo "Table created successfully<br>";
-} else {
-  echo "Error creating table: " . $conn->error;
-}
-
-
-
-
-//sql to create PILOTS table 
-
-$sql = "CREATE TABLE pilots (
-  pilot_id INT AUTO_INCREMENT PRIMARY KEY,
-  pilot_name VARCHAR(50) NOT NULL,
-  ship_name VARCHAR(50) NULL
-) ENGINE=InnoDB;";
-
-if ($conn->query($sql) === TRUE) {
-  echo "Table created successfully<br>";
-} else {
-  echo "Error creating table: " . $conn->error;
-}
-
-//Droid models
-
-$sql = "CREATE TABLE droids(
-    droid_id INT AUTO_INCREMENT PRIMARY KEY,
-    droid_name VARCHAR(50) NOT NULL,
-    droid_nickname VARCHAR(50) NULL,
-    droid_owner VARCHAR(50) NULL,
-    religion_name VARCHAR(10)NULL
 ) ENGINE=InnoDB;
 ";
 
@@ -218,6 +153,78 @@ echo "Table created successfully<br>";
 echo "Error creating table: " . $conn->error;
 }
 
+//sql to create PILOTS table 
+
+$sql = "CREATE TABLE pilots (
+  pilot_id INT AUTO_INCREMENT PRIMARY KEY,
+  pilot_name VARCHAR(50) NOT NULL,
+  ship_id INT
+  -- FOREIGN KEY(ship_id) REFERENCES ship_models(Ship_id) ON DELETE SET NULL
+) ENGINE=InnoDB;";
+
+if ($conn->query($sql) === TRUE) {
+  echo "Table created successfully<br>";
+} else {
+  echo "Error creating table: " . $conn->error;
+}
+
+
+//Ship models
+
+$sql = "CREATE TABLE ship_models (
+  ship_id INT AUTO_INCREMENT PRIMARY KEY,
+  ship_name VARCHAR(50) NOT NULL,
+  pilot_id INT,
+  FOREIGN KEY(pilot_id) REFERENCES pilots(pilot_id)ON DELETE SET NULL
+) ENGINE=InnoDB;";
+
+if ($conn->query($sql) === TRUE) {
+  echo "Table created successfully<br>";
+} else {
+  echo "Error creating table: " . $conn->error;
+}
+
+$sql = "
+ALTER TABLE pilots ADD COLUMN
+FOREIGN KEY(ship_id) REFERENCES ship_models(Ship_id) ON DELETE SET NULL"; 
+
+// Create Droids table
+$sql = "CREATE TABLE Droids (
+  droid_id INT AUTO_INCREMENT PRIMARY KEY,
+  droid_name VARCHAR(50) NOT NULL,
+  droid_nickname VARCHAR(50) NULL,
+  droid_owner INT,
+  religion_id INT,
+  FOREIGN KEY (religion_id) REFERENCES Religion(religion_id) ON DELETE SET NULL
+) ENGINE=InnoDB;";
+
+if ($conn->query($sql) === TRUE) {
+  echo "Table created successfully<br>";
+} else {
+  echo "Error creating table: " . $conn->error;
+}
+
+
+// Create Characters table
+$sql = "CREATE TABLE Characters (
+  character_id INT AUTO_INCREMENT PRIMARY KEY,
+  char_name VARCHAR(50) UNIQUE NOT NULL,
+  species_id INT,
+  planet_id INT,
+  religion_id INT,
+  droid_id INT,
+  movie_id INT,
+  FOREIGN KEY (species_id) REFERENCES Species(species_id) ON DELETE SET NULL,
+  FOREIGN KEY (planet_id) REFERENCES Planets(planet_id) ON DELETE SET NULL,
+  FOREIGN KEY (religion_id) REFERENCES religion(religion_id) ON DELETE SET NULL,
+  FOREIGN KEY (droid_id) REFERENCES Droids(droid_id) ON DELETE SET NULL,
+  FOREIGN KEY (movie_id) REFERENCES Movies(movie_id) ON DELETE SET NULL
+) ENGINE=InnoDB;";
+$conn->query($sql);
+
+$sql = "
+ALTER TABLE droids ADD COLUMN
+FOREIGN KEY (char_id) REFERENCES characters(char_id) ON DELETE SET NULL"; 
 
 
 
@@ -229,46 +236,65 @@ echo "Error creating table: " . $conn->error;
 
 
 
-$sql = "INSERT INTO Characters (char_name, species_name, planet_name, religion_name, droid_name) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$sql = "INSERT INTO Characters (char_name) 
         VALUES 
-        ('Darth Vader', 'Human', 'Tatooine', 'Sith', NULL),
-        ('Anakin Skywalker', 'Human', 'Tatooine', 'Jedi', NULL),
-        ('Obi-Wan Kenobi', 'Human', 'Stewjon', 'Jedi', NULL),
-        ('Luke Skywalker', 'Human', 'Tatooine', 'Jedi', NULL),
-        ('Leia Organa', 'Human', 'Alderaan', 'None', NULL),
-        ('Han Solo', 'Human', 'Corellia', 'None', 'R2-D2'),
-        ('Chewbacca', 'Wookiee', 'Kashyyyk', 'None', NULL),
-        ('Yoda', 'Unknown', 'Dagobah', 'Jedi', NULL),
-        ('Palpatine', 'Human', 'Naboo', 'Sith', 'C-3PO'),
-        ('Padmé Amidala', 'Human', 'Naboo', 'None', NULL),
-        ('Kylo Ren', 'Human', 'Chandrila', 'Sith', NULL),
-        ('Rey', 'Human', 'Jakku', 'Jedi', NULL),
-        ('Finn', 'Human', 'Unknown', 'None', 'BB-8'),
-        ('Poe Dameron', 'Human', 'Yavin 4', 'None', 'BB-8'),
-        ('Mace Windu', 'Human', 'Haruun Kal', 'Jedi', NULL),
-        ('Qui-Gon Jinn', 'Human', 'Coruscant', 'Jedi', NULL),
-        ('Jabba the Hutt', 'Hutt', 'Nal Hutta', 'None', NULL),
-        ('Greedo', 'Rodian', 'Rodia', 'None', NULL),
-        ('Lando Calrissian', 'Human', 'Socorro', 'None', NULL),
-        ('Boba Fett', 'Human', 'Kamino', 'None', NULL),
-        ('Ahsoka Tano', 'Togruta', 'Shili', 'Jedi', NULL),
-        ('Hunter', 'Clone', 'Kamino', 'None', 'Omega'),
-        ('Wrecker', 'Clone', 'Kamino', 'None', NULL),
-        ('Tech', 'Clone', 'Kamino', 'None', NULL),
-        ('Crosshair', 'Clone', 'Kamino', 'None', NULL),
-        ('Echo', 'Clone', 'Kamino', 'None', 'R7-A7'),
-        ('Captain Rex', 'Clone', 'Kamino', 'None', NULL),
-        ('Sabine Wren', 'Human', 'Lothal', 'Mandalorian', NULL),
-        ('Ezra Bridger', 'Human', 'Lothal', 'Jedi', NULL),
-        ('Kanan Jarrus', 'Human', 'Lothal', 'Jedi', NULL),
-        ('Hera Syndulla', 'Twi\'lek', 'Ryloth', 'None', NULL),
-        ('Garazeb \"Zeb\" Orrelios', 'Lasat', 'Lothal', 'None', NULL),
-        ('Chopper', 'Astromech', 'Unknown', 'None', NULL),
-        ('Bo-Katan Kryze', 'Human', 'Mandalore', 'Mandalorian', NULL),
-        ('Din Djarin', 'Human', 'Nevarro', 'Mandalorian', 'IG-11'),
-        ('Grogu', 'Yoda\'s species', 'Unknown', 'None', NULL),
-        ('Pre Vizsla', 'Human', 'Mandalore', 'Mandalorian', NULL),
-        ('Fennec Shand', 'Human', 'Unknown', 'None', NULL)
+        ('Darth Vader'),
+        ('Anakin Skywalker'),
+        ('Obi-Wan Kenobi'),
+        ('Luke Skywalker'),
+        ('Leia Organa'),
+        ('Han Solo'),
+        ('Chewbacca'),
+        ('Yoda'),
+        ('Palpatine'),
+        ('Padmé Amidala'),
+        ('Kylo Ren'),
+        ('Rey'),
+        ('Finn'),
+        ('Poe Dameron'),
+        ('Mace Windu'),
+        ('Qui-Gon Jinn'),
+        ('Jabba the Hutt'),
+        ('Greedo'),
+        ('Lando Calrissian'),
+        ('Boba Fett'),
+        ('Ahsoka Tano'),
+        ('Hunter'),
+        ('Wrecker'),
+        ('Tech'),
+        ('Crosshair'),
+        ('Echo'),
+        ('Captain Rex'),
+        ('Sabine Wren'),
+        ('Ezra Bridger'),
+        ('Kanan Jarrus'),
+        ('Hera Syndulla'),
+        ('Garazeb \"Zeb\" Orrelios'),
+        ('Chopper'),
+        ('Bo-Katan Kryze'),
+        ('Din Djarin'),
+        ('Grogu'),
+        ('Pre Vizsla'),
+        ('Fennec Shand');
 ";
 
 
@@ -358,46 +384,44 @@ $sql = "INSERT INTO Species (species_name, species_description) VALUES
 }
 
 
-$sql="INSERT INTO ship_models (ship_name, pilot_name) VALUES
-  ('Millennium Falcon', 'Han Solo'),
-  ('X-Wing Starfighter', 'Luke Skywalker'),
-  ('TIE Fighter', 'Darth Vader'),
-  ('Slave 1', 'Boba Fett'),
-  ('Imperial Shuttle', 'Palpatine'),
-  ('E-Wing Starfighter', 'Nrin Vakil'),
-  ('A-Wing Starfighter', 'Arvel Crynyd'),
-  ('B-Wing Starfighter', 'Hera Syndulla'),
-  ('Y-Wing Starfighter', 'Gold Leader'),
-  ('TIE Interceptor', 'Darklighter'),
-  ('TIE Bomber', 'Rogue Squadron Pilot'),
-  ('Rebel Transport', 'Lando Calrissian'),
-  ('Death Star', 'Grand Moff Tarkin'),
-  ('Star Destroyer', 'Admiral Piett'),
-  ('Super Star Destroyer', 'Vader'),
-  ('Naboo Fighter', 'Qui-Gon Jinn'),
-  ('Naboo Fighter', 'Obi-Wan Kenobi'),
-  ('T-65 X-Wing', 'Red Leader'),
-  ('Cloud Car', 'Lando Calrissian'),
-  ('V-19 Torrent Starfighter', 'Plo Koon'),
-  ('Z-95 Headhunter', 'Bail Prestor Organa'),
-  ('Republic Gunship', 'Anakin Skywalker'),
-  ('Acclamator-class Assault Ship', 'Mace Windu'),
-  ('Arquitens-class Light Cruiser', 'Admiral Trench'),
-  ('LAAT/i Gunship', 'Clone Trooper'),
-  ('TIE Defender', 'Vader'),
-  ('Speeder Bike', 'Biker Scout'),
-  ('Sith Infiltrator', 'Darth Maul'),
-  ('Jedi Starfighter', 'Obi-Wan Kenobi'),
-  ('Tri-Fighter', 'Count Dooku'),
-  ('V-wing Starfighter', 'Jedi Starfighter'),
-  ('TIE Bomber', 'Imperial Pilot'),
-  ('ARC-170 Starfighter', 'Anakin Skywalker'),
-  ('Pelta-class Frigate', 'Clone Captain'),
-  ('Sith Interceptor', 'Darth Sidious'),
-  ('Republic Star Destroyer', 'Clone Commander'),
-  ('Interdictor-class Star Destroyer', 'Captain Needa'),
-  ('Star Destroyer-Class', 'Admiral Motti'),
-  ('Droid Control Ship', 'Nute Gunray');
+$sql="INSERT INTO ship_models (ship_name) VALUES
+  ('Millennium Falcon'),
+  ('X-Wing Starfighter'),
+  ('TIE Fighter'),
+  ('Slave 1'),
+  ('Imperial Shuttle'),
+  ('E-Wing Starfighter'),
+  ('A-Wing Starfighter'),
+  ('B-Wing Starfighter'),
+  ('Y-Wing Starfighter'),
+  ('TIE Interceptor'),
+  ('TIE Bomber'),
+  ('Rebel Transport'),
+  ('Death Star'),
+  ('Star Destroyer'),
+  ('Super Star Destroyer'),
+  ('Naboo Fighter'),
+  ('T-65 X-Wing'),
+  ('Cloud Car'),
+  ('V-19 Torrent Starfighter'),
+  ('Z-95 Headhunter'),
+  ('Republic Gunship'),
+  ('Acclamator-class Assault Ship'),
+  ('Arquitens-class Light Cruiser'),
+  ('LAAT/i Gunship'),
+  ('TIE Defender'),
+  ('Speeder Bike'),
+  ('Sith Infiltrator'),
+  ('Jedi Starfighter'),
+  ('Tri-Fighter'),
+  ('V-wing Starfighter'),
+  ('ARC-170 Starfighter'),
+  ('Pelta-class Frigate'),
+  ('Sith Interceptor'),
+  ('Republic Star Destroyer'),
+  ('Interdictor-class Star Destroyer'),
+  ('Star Destroyer-Class'),
+  ('Droid Control Ship');
 ";
 if ($conn->query($sql) === TRUE) {
   echo "ship models inserted successfully<br>";
@@ -405,46 +429,48 @@ if ($conn->query($sql) === TRUE) {
   echo "Error inserting planets: " . $conn->error;
 }
 
-$sql="INSERT INTO pilots (pilot_name, ship_name) VALUES
-  ('Han Solo', 'Millennium Falcon'),
-  ('Luke Skywalker', 'X-Wing Starfighter'),
-  ('Darth Vader', 'TIE Fighter'),
-  ('Boba Fett', 'Slave 1'),
-  ('Palpatine', 'Imperial Shuttle'),
-  ('Nrin Vakil', 'E-Wing Starfighter'),
-  ('Arvel Crynyd', 'A-Wing Starfighter'),
-  ('Hera Syndulla', 'B-Wing Starfighter'),
-  ('Gold Leader', 'Y-Wing Starfighter'),
-  ('Darklighter', 'TIE Interceptor'),
-  ('Rogue Squadron Pilot', 'TIE Bomber'),
-  ('Lando Calrissian', 'Rebel Transport'),
-  ('Grand Moff Tarkin', 'Death Star'),
-  ('Admiral Piett', 'Star Destroyer'),
-  ('Vader', 'Super Star Destroyer'),
-  ('Qui-Gon Jinn', 'Naboo Fighter'),
-  ('Obi-Wan Kenobi', 'Naboo Fighter'),
-  ('Red Leader', 'T-65 X-Wing'),
-  ('Lando Calrissian', 'Cloud Car'),
-  ('Plo Koon', 'V-19 Torrent Starfighter'),
-  ('Bail Prestor Organa', 'Z-95 Headhunter'),
-  ('Anakin Skywalker', 'Republic Gunship'),
-  ('Mace Windu', 'Acclamator-class Assault Ship'),
-  ('Admiral Trench', 'Arquitens-class Light Cruiser'),
-  ('Clone Trooper', 'LAAT/i Gunship'),
-  ('Vader', 'TIE Defender'),
-  ('Biker Scout', 'Speeder Bike'),
-  ('Darth Maul', 'Sith Infiltrator'),
-  ('Obi-Wan Kenobi', 'Jedi Starfighter'),
-  ('Count Dooku', 'Tri-Fighter'),
-  ('Jedi Starfighter', 'V-wing Starfighter'),
-  ('Imperial Pilot', 'TIE Bomber'),
-  ('Anakin Skywalker', 'ARC-170 Starfighter'),
-  ('Clone Captain', 'Pelta-class Frigate'),
-  ('Sith Sidious', 'Sith Interceptor'),
-  ('Clone Commander', 'Republic Star Destroyer'),
-  ('Captain Needa', 'Interdictor-class Star Destroyer'),
-  ('Admiral Motti', 'Star Destroyer-Class'),
-  ('Nute Gunray', 'Droid Control Ship');";
+$sql = "INSERT INTO pilots (pilot_name) VALUES
+  ('Han Solo'),
+  ('Luke Skywalker'),
+  ('Darth Vader'),
+  ('Boba Fett'),
+  ('Palpatine'),
+  ('Nrin Vakil'),
+  ('Arvel Crynyd'),
+  ('Hera Syndulla'),
+  ('Gold Leader'),
+  ('Darklighter'),
+  ('Rogue Squadron Pilot'),
+  ('Lando Calrissian'),
+  ('Grand Moff Tarkin'),
+  ('Admiral Piett'),
+  ('Vader'),
+  ('Qui-Gon Jinn'),
+  ('Obi-Wan Kenobi'),
+  ('Red Leader'),
+  ('Lando Calrissian'),
+  ('Plo Koon'),
+  ('Bail Prestor Organa'),
+  ('Anakin Skywalker'),
+  ('Mace Windu'),
+  ('Admiral Trench'),
+  ('Clone Trooper'),
+  ('Vader'),
+  ('Biker Scout'),
+  ('Darth Maul'),
+  ('Obi-Wan Kenobi'),
+  ('Count Dooku'),
+  ('Jedi Starfighter'),
+  ('Imperial Pilot'),
+  ('Anakin Skywalker'),
+  ('Clone Captain'),
+  ('Sith Sidious'),
+  ('Clone Commander'),
+  ('Captain Needa'),
+  ('Admiral Motti'),
+  ('Nute Gunray');
+";
+
 
   if ($conn->query($sql) === TRUE) {
     echo " Pilots inserted successfully<br>";
@@ -453,45 +479,45 @@ $sql="INSERT INTO pilots (pilot_name, ship_name) VALUES
   }
 
 
-$sql = "INSERT INTO droids (droid_name, droid_nickname, droid_owner, religion_name) VALUES
-  ('R2-D2', 'Artoo', 'Luke Skywalker', NULL),
-  ('C-3PO', 'Threepio', 'Luke Skywalker', NULL),
-  ('BB-8', 'BB', 'Rey', NULL),
-  ('R5-D4', 'Red', 'Luke Skywalker', NULL),
-  ('IG-88', 'Assassin Droid', 'Boba Fett', NULL),
-  ('K-2SO', 'Kaytoo', 'Cassian Andor', NULL),
-  ('Chopper', 'C1-10P', 'Hera Syndulla', NULL),
-  ('L3-37', 'L3', 'Lando Calrissian', NULL),
-  ('C1-10P', 'Chopper', 'Hera Syndulla', NULL),
-  ('WED-15', 'Rex', 'Rey', NULL),
-  ('EV-9D9', 'EV-9', 'Jabba the Hutt', NULL),
-  ('R2-Q5', 'R2-Q5', 'Imperial Forces', NULL),
-  ('PZ-4CO', 'PZ', 'Resistance', NULL),
-  ('T3-M4', 'T3', 'Revan', NULL),
-  ('D-O', 'D-O', 'Rey', NULL),
-  ('T0-B1', 'Toobi', 'Poe Dameron', NULL),
-  ('IG-11', 'IG', 'Qui-Gon Jinn', NULL),
-  ('R2-B1', 'R2-B1', 'Unknown', NULL),
-  ('R4-P17', 'R4', 'Obi-Wan Kenobi', NULL),
-  ('L7-20', 'L7', 'Bounty Hunter', NULL),
-  ('MSE-6', 'MSE-6', 'Empire', NULL),
-  ('T3-A2', 'T3', 'Jedi', NULL),
-  ('Q7-T7', 'Q7', 'Jedi', NULL),
-  ('GONK', 'GONK', 'Rebel Alliance', NULL),
-  ('FX-7', 'FX-7', 'Republic', NULL),
-  ('T-3', 'T-3', NULL, NULL),
-  ('R1-G4', 'R1', 'Jedi Order', NULL),
-  ('R9-X9', 'R9', 'Jedi Council', NULL),
-  ('R2-A6', 'R2-A6', 'Alliance', NULL),
-  ('A-1', 'A-1', 'Jedi', NULL),
-  ('V-9', 'V9', 'Jedi', NULL),
-  ('Darth Maul\'s Droid', 'Droid', 'Darth Maul', NULL),
-  ('ZED', 'ZED', 'Clone Troopers', NULL),
-  ('T7-01', 'T7', 'Jedi Knight', NULL),
-  ('R7-A7', 'R7', 'Rebellion', NULL),
-  ('R9-R4', 'R9-R4', 'Empire', NULL),
-  ('R3-X2', 'R3', 'Jedi Order', NULL),
-  ('R2-X2', 'R2-X2', 'Republic', NULL);
+  $sql = "INSERT INTO droids (droid_name, droid_nickname) VALUES
+  ('R2-D2', 'Artoo'),
+  ('C-3PO', 'Threepio'),
+  ('BB-8', 'BB'),
+  ('R5-D4', 'Red'),
+  ('IG-88', 'Assassin Droid'),
+  ('K-2SO', 'Kaytoo'),
+  ('Chopper', 'C1-10P'),
+  ('L3-37', 'L3'),
+  ('C1-10P', 'Chopper'),
+  ('WED-15', 'Rex'),
+  ('EV-9D9', 'EV-9'),
+  ('R2-Q5', 'R2-Q5'),
+  ('PZ-4CO', 'PZ'),
+  ('T3-M4', 'T3'),
+  ('D-O', 'D-O'),
+  ('T0-B1', 'Toobi'),
+  ('IG-11', 'IG'),
+  ('R2-B1', 'R2-B1'),
+  ('R4-P17', 'R4'),
+  ('L7-20', 'L7'),
+  ('MSE-6', 'MSE-6'),
+  ('T3-A2', 'T3'),
+  ('Q7-T7', 'Q7'),
+  ('GONK', 'GONK'),
+  ('FX-7', 'FX-7'),
+  ('T-3', 'T-3'),
+  ('R1-G4', 'R1'),
+  ('R9-X9', 'R9'),
+  ('R2-A6', 'R2-A6'),
+  ('A-1', 'A-1'),
+  ('V-9', 'V9'),
+  ('Darth Maul\'s Droid', 'Droid'),
+  ('ZED', 'ZED'),
+  ('T7-01', 'T7'),
+  ('R7-A7', 'R7'),
+  ('R9-R4', 'R9-R4'),
+  ('R3-X2', 'R3'),
+  ('R2-X2', 'R2-X2');
 ";
 
 if ($conn->query($sql) === TRUE) {

@@ -10,13 +10,9 @@ function close(){
   }
   
   function locate(location,element){ 
-    
     if(location && element == null){
       return location;  
-      
-    }else
-      
-    }
+    }}
   
   function getFiles(formQuestion,location){
     close();
