@@ -152,14 +152,14 @@ function submit(){
 
       <!-- droid   -->
       <label for="droid_name">Droid</label>
-      <input class="formQ" type="text" id="droid_name" name="droid_name" onkeyup="getFiles('droid_name')">
+      <input class="formQ" type="text" id="droid_name" name="droid_name" onkeyup="getFiles('droid_name' , 'txtHint_droid_name')">
 
        <ul class="dropdown" id="txtHint_droid_name"></ul>
 
 
       <!-- ship_model -->
       <label for="ship_name">Ship </label>
-      <input class="formQ" type="text" id="ship_name" name="ship_name" onkeyup="getFiles('pilot_name' , 'txtHint_pilot_name')">
+      <input class="formQ" type="text" id="ship_name" name="ship_name" onkeyup="getFiles('ship_name' , 'txtHint_ship_name')">
 
        <ul class="dropdown"   id="txtHint_ship_name"></ul>
 

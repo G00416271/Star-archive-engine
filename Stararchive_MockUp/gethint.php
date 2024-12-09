@@ -46,7 +46,7 @@ elseif (($formQuestion == 'droid_name')and strlen($droid_hint) > 0) {
 }elseif (($formQuestion == 'pilot_name')and strlen($pilot_hint) > 0) {
     $sql2 = "SELECT pilot_name FROM pilots WHERE LOWER(pilot_name) LIKE '%$pilot_hint%'";
 
-}elseif (($formQuestion == 'movies_name')and strlen($droid_hint) > 0) {
+}elseif (($formQuestion == 'movie_name')and strlen($movie_hint) > 0) {
     $sql2 = "SELECT movie_name FROM movies WHERE LOWER(movie_name) LIKE '%$movie_hint%'";
 }
 

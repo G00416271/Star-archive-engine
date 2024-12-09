@@ -138,7 +138,7 @@ if ($conn->query($sql) === TRUE) {
   echo "Error creating table: " . $conn->error;
 }
 
-//Movies models
+//Movies 
 
 $sql = "CREATE TABLE movies(
   movie_id INT AUTO_INCREMENT PRIMARY KEY,
