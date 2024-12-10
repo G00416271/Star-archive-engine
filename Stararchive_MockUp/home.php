@@ -50,8 +50,12 @@ function close(){
 }
 
 function autofill(valueOfAutofill) {
+  close();
+  
   let location_of_element = (set_location.split("," )[1]);
-  document.getElementById(location_of_element).innerHTML = ("<p>" + valueOfAutofill + "</p>");
+  
+  document.getElementById(location_of_element).value = valueOfAutofill;
+
 }
 
 var formQuestion = getFiles();
