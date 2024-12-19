@@ -222,6 +222,7 @@ $sql = "CREATE TABLE Characters (
 ) ENGINE=InnoDB;";
 $conn->query($sql);
 
+
 $sql = "
 ALTER TABLE droids ADD COLUMN
 FOREIGN KEY (char_id) REFERENCES characters(char_id) ON DELETE SET NULL"; 
@@ -254,298 +255,235 @@ FOREIGN KEY (char_id) REFERENCES characters(char_id) ON DELETE SET NULL";
 
 
 
+// Characters table inserts
+$sql = "INSERT INTO Characters (char_name) VALUES
+('Luke Skywalker'),
+('Darth Vader'),
+('Han Solo'),
+('Leia Organa'),
+('Chewbacca'),
+('C-3PO'),
+('R2-D2'),
+('Obi-Wan Kenobi'),
+('Yoda'),
+('Palpatine'),
+('Darth Maul'),
+('Padmé Amidala'),
+('Qui-Gon Jinn'),
+('Jar Jar Binks'),
+('Anakin Skywalker'),
+('Count Dooku'),
+('Jango Fett'),
+('Boba Fett'),
+('General Grievous'),
+('Ahsoka Tano'),
+('Rey'),
+('Kylo Ren'),
+('Finn'),
+('Poe Dameron'),
+('BB-8'),
+('Maz Kanata'),
+('Snoke'),
+('Hux'),
+('Rose Tico'),
+('Admiral Holdo'),
+('Lando Calrissian'),
+('Ben Solo'),
+('Janna'),
+('Zorii Bliss'),
+('Babu Frik'),
+('D-O');";
 
-$sql = "INSERT INTO Characters (char_name) 
-        VALUES 
-        ('Darth Vader'),
-        ('Anakin Skywalker'),
-        ('Obi-Wan Kenobi'),
-        ('Luke Skywalker'),
-        ('Leia Organa'),
-        ('Han Solo'),
-        ('Chewbacca'),
-        ('Yoda'),
-        ('Palpatine'),
-        ('Padmé Amidala'),
-        ('Kylo Ren'),
-        ('Rey'),
-        ('Finn'),
-        ('Poe Dameron'),
-        ('Mace Windu'),
-        ('Qui-Gon Jinn'),
-        ('Jabba the Hutt'),
-        ('Greedo'),
-        ('Lando Calrissian'),
-        ('Boba Fett'),
-        ('Ahsoka Tano'),
-        ('Hunter'),
-        ('Wrecker'),
-        ('Tech'),
-        ('Crosshair'),
-        ('Echo'),
-        ('Captain Rex'),
-        ('Sabine Wren'),
-        ('Ezra Bridger'),
-        ('Kanan Jarrus'),
-        ('Hera Syndulla'),
-        ('Garazeb \"Zeb\" Orrelios'),
-        ('Chopper'),
-        ('Bo-Katan Kryze'),
-        ('Din Djarin'),
-        ('Grogu'),
-        ('Pre Vizsla'),
-        ('Fennec Shand');
-";
-
-
-        if ($conn->query($sql) === TRUE) {
-          echo "characters able created successfully<br>";
-        } else {
-          echo "Error creating table: " . $conn->error;
-        }
-
-
-        $sql = "INSERT INTO Planets (planet_name, planet_region) VALUES
-        ('Coruscant', 'Inner Rim'),
-        ('Tatooine', 'Outer Rim'),
-        ('Naboo', 'Mid Rim'),
-        ('Hoth', 'Outer Rim'),
-        ('Dagobah', 'Outer Rim'),
-        ('Endor', 'Outer Rim'),
-        ('Kashyyyk', 'Mid Rim'),
-        ('Alderaan', 'Core Worlds'),
-        ('Mustafar', 'Outer Rim'),
-        ('Jakku', 'Unknown Regions'),
-        ('Geonosis', 'Outer Rim'),
-        ('Kamino', 'Outer Rim'),
-        
-        ('Bespin', 'Outer Rim'),
-        ('Yavin 4', 'Mid Rim'),
-        ('Lothal', 'Outer Rim'),
-        ('Utapau', 'Outer Rim'),
-        
-        ('Crait', 'Outer Rim'),
-        ('Ahch-To', 'Outer Rim'),
-        ('Dathomir', 'Mid Rim'),
-        ('Felucia', 'Outer Rim'),
-        ('Ryloth', 'Outer Rim'),
-        ('Rodia', 'Mid Rim'),
-        ('Togruta', 'Outer Rim');";
-
-if ($conn->query($sql) === TRUE) {
-  echo "40 planets inserted successfully<br>";
+if ($conn->multi_query($sql) === TRUE) {
+    echo "<br>Characters table inserted successfully";
 } else {
-  echo "Error inserting planets: " . $conn->error;
+    echo "<br>Error: " . $sql . "<br>" . $conn->error;
 }
 
+
+// Planets table inserts
+$sql = "INSERT INTO Planets (planet_name, planet_region) VALUES
+('Tatooine', 'Outer Rim'),
+('Alderaan', 'Core Worlds'),
+('Naboo', 'Mid Rim'),
+('Coruscant', 'Core Worlds'),
+('Shili', 'Expansion Region'),
+('Mandalore', 'Outer Rim'),
+('Kashyyyk', 'Mid Rim'),
+('Dagobah', 'Outer Rim'),
+('Kamino', 'Outer Rim'),
+('Geonosis', 'Outer Rim'),
+('Lothal', 'Outer Rim'),
+('Mustafar', 'Outer Rim'),
+('Endor', 'Outer Rim'),
+('Hoth', 'Outer Rim'),
+('Bespin', 'Outer Rim'),
+('Corellia', 'Core Worlds'),
+('Jakku', 'Western Reaches'),
+('Dathomir', 'Outer Rim'),
+('Yavin IV', 'Outer Rim'),
+('Scarif', 'Outer Rim'),
+('Jedha', 'Mid Rim'),
+('Ryloth', 'Outer Rim'),
+('Zygerria', 'Outer Rim'),
+('Felucia', 'Outer Rim'),
+('Onderon', 'Inner Rim'),
+('Mon Cala', 'Outer Rim'),
+('Exegol', 'Unknown Regions'),
+('Ahch-To', 'Unknown Regions'),
+('Ilum', 'Unknown Regions'),
+('Polis Massa', 'Outer Rim'),
+('Saleucami', 'Outer Rim'),
+('Umbara', 'Mid Rim'),
+('Toydaria', 'Hutt Space'),
+('Ord Mantell', 'Mid Rim'),
+('Crait', 'Outer Rim'),
+('Malachor', 'Outer Rim'),
+('Serenno', 'Outer Rim'),
+('Nal Hutta', 'Hutt Space'),
+('Hosnian Prime', 'Core Worlds'),
+('Korriban', 'Outer Rim')";
+
+if ($conn->multi_query($sql) === TRUE) {
+    echo "Planets table inserted successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
+
+// Species table inserts
 $sql = "INSERT INTO Species (species_name, species_description) VALUES
-  ('Human', 'Humans are the most common species in the galaxy.'),
-  ('Wookiee', 'A tall, hairy species known for their strength and loyalty.'),
-  ('Rodian', 'A species of green-skinned humanoids from the planet Rodia.'),
-  ('Hutt', 'A slug-like species, notorious for their criminal underworld influence.'),
-  ('Twi\'lek', 'A species of humanoids with long head-tails called Lekku, originating from Ryloth.'),
-  ('Zabrak', 'A species known for their distinctive horns and tattoos, originally from Iridonia.'),
-  ('Muun', 'A species of tall, thin beings known for their long limbs and large heads, native to the planet Muunilinst.'),
-  ('Chagrian', 'A species with large head-tails, originating from the planet Chagri.'),
-  ('Iktotchi', 'A species known for their precognitive abilities, originating from Iktotch.'),
-  ('Nautolan', 'A species known for their amphibious characteristics, originating from Glee Anselm.'),
-  ('Vulpter', 'A species from the planet Vulpter, with orange fur and sharp fangs.'),
-  ('Toong', 'A species from the planet Toong, known for their telepathic abilities.'),
-  ('Cerean', 'A species with tall, conical heads, originating from the planet Cerea.'),
-  ('Skakoan', 'A species that requires pressurized suits to survive in their home planet\'s atmosphere.'),
-  ('Kel Dor', 'A species with respiratory needs, native to the planet Dorin.'),
-  ('Geonosian', 'A species of insectoid beings, originating from the planet Geonosis.'),
-  ('Mirialan', 'A species of green-skinned humanoids with distinctive tattoos, originating from Mirial.'),
-  ('Clawdite', 'A shapeshifting species, originally from the planet Zolan.'),
-  ('Shistavanen', 'A wolf-like species with sharp senses and keen hunting abilities.'),
-  ('Neimodian', 'A species of humanoids known for their roles in trade, originating from the planet Neimodia.'),
-  ('Gungan', 'A species known for their amphibious nature, originating from the planet Naboo.'),
-  ('Toydarian', 'A species that is immune to mind tricks, originating from the planet Toydaria.'),
-  ('Droid', 'Artificial beings, usually mechanical in nature, created to perform various tasks.'),
-  ('Yoda\'s species', 'A mysterious and rare species, famous for their connection to the Force.'),
-  ('Bith', 'A species known for their large heads and high intellectual capacity, originating from the planet Clakdor VII.'),
-  ('Togruta', 'A species known for their colorful skin and head-tails, originating from the planet Shili.'),
-  ('Kaleesh', 'A species with reptilian features, originating from the planet Kalee.'),
-  ('Pau\'an', 'A species with long, pale faces, originating from the planet Utapau.'),
-  ('Chiss', 'A species known for their blue skin and red eyes, originating from the Unknown Regions.'),
-  ('Rattataki', 'A humanoid species from the planet Rattatak, known for their warrior culture.'),
-  ('Urodel', 'A species of amphibious beings with great flexibility, from the planet Urodel.'),
-  ('Sullustan', 'A species of humanoid beings with large eyes, originating from the planet Sullust.'),
-  ('Besalisk', 'A species with four arms and a strong connection to the Force, originating from the planet Ojom.'),
-  ('Xexto', 'A species with an elongated head and slender limbs, originating from the planet Xexto.'),
-  ('Tholothian', 'A species with long, tentacle-like appendages, originating from the planet Tholoth.'),
-  ('Kiffar', 'A species with markings that can be used to identify individuals, originating from the planet Kiffu.'),
-  ('Lasat', 'A species of strong warriors, originating from the planet Lira San.');";
+('Togruta', 'A humanoid species with colorful skin patterns and large head-tails.'),
+('Human', 'A common sentient species in the galaxy.'),
+('Droid', 'Mechanical beings with varying levels of sentience.'),
+('Wookiee', 'A tall, hairy species known for their strength and loyalty.'),
+('Twi lek', 'A humanoid species wit head tails called lekku.'),
+('Zabrak', 'A species known for their horns and resilience.'),
+('Chiss', 'A blue-skinned humanoid species with red eyes.'),
+('Rodian', 'Green-skinned species known for their tracking skills.'),
+('Ithorian', 'A species with long necks and two mouths.'),
+('Mon Calamari', 'Aquatic species known for their shipbuilding skills.'),
+('Nautolan', 'Aquatic species with head tentacles.'),
+('Duros', 'A humanoid species with blue skin and red eyes.'),
+('Trandoshan', 'Reptilian species known for their hunting prowess.'),
+('Kaminoan', 'Tall, slender species from Kamino.'),
+('Hutt', 'A slug-like species known for their criminal empires.'),
+('Chadra-Fan', 'Small, bat-like species.'),
+('Nikto', 'Reptilian humanoids known for their loyalty.'),
+('Kel Dor', 'Humanoids with breath masks and goggles.'),
+('Ewok', 'Small, furry bipeds from Endor.'),
+('Geonosian', 'Insectoid species from Geonosis.'),
+('Gungan', 'Amphibious species from Naboo.'),
+('Neimoidian', 'Humanoids known for their trade skills.'),
+('Sith Pureblood', 'The ancient Sith species.'),
+('Aqualish', 'Walrus-faced humanoids.'),
+('Toydarian', 'Small, winged humanoids immune to mind tricks.'),
+('Quarren', 'Aquatic species from Mon Cala.'),
+('Devaronian', 'Humanoids with devil-like horns.'),
+('Togrutan', 'Colorful species similar to Togruta.'),
+('Pau an', 'Tall humanoids fr Utapau.'),
+('Weequay', 'Reptilian humanoids known for their piracy.'),
+('Gamorrean', 'Pig-like humanoids.'),
+('Lannik', 'Small, humanoid warriors.'),
+('Vulptereen', 'Bulldog-faced species.'),
+('Selkath', 'Aquatic species from Manaan.'),
+('Shistavanen', 'Wolf-like humanoids.'),
+('Falleen', 'Reptilian humanoids with pheromonal control.'),
+('Mirialan', 'Green-skinned humanoids with facial tattoos.'),
+('Pantoran', 'Blue-skinned humanoids.'),
+('Lasat', 'Large, strong humanoids.')";
 
-  if ($conn->query($sql) === TRUE) {
-    echo "40 Species inserted successfully<br>";
-  } else {
-    echo "Error inserting planets: " . $conn->error;
-}
-
-
-$sql="INSERT INTO ship_models (ship_name) VALUES
-  ('Millennium Falcon'),
-  ('X-Wing Starfighter'),
-  ('TIE Fighter'),
-  ('Slave 1'),
-  ('Imperial Shuttle'),
-  ('E-Wing Starfighter'),
-  ('A-Wing Starfighter'),
-  ('B-Wing Starfighter'),
-  ('Y-Wing Starfighter'),
-  ('TIE Interceptor'),
-  ('TIE Bomber'),
-  ('Rebel Transport'),
-  ('Death Star'),
-  ('Star Destroyer'),
-  ('Super Star Destroyer'),
-  ('Naboo Fighter'),
-  ('T-65 X-Wing'),
-  ('Cloud Car'),
-  ('V-19 Torrent Starfighter'),
-  ('Z-95 Headhunter'),
-  ('Republic Gunship'),
-  ('Acclamator-class Assault Ship'),
-  ('Arquitens-class Light Cruiser'),
-  ('LAAT/i Gunship'),
-  ('TIE Defender'),
-  ('Speeder Bike'),
-  ('Sith Infiltrator'),
-  ('Jedi Starfighter'),
-  ('Tri-Fighter'),
-  ('V-wing Starfighter'),
-  ('ARC-170 Starfighter'),
-  ('Pelta-class Frigate'),
-  ('Sith Interceptor'),
-  ('Republic Star Destroyer'),
-  ('Interdictor-class Star Destroyer'),
-  ('Star Destroyer-Class'),
-  ('Droid Control Ship');
-";
-if ($conn->query($sql) === TRUE) {
-  echo "ship models inserted successfully<br>";
+if ($conn->multi_query($sql) === TRUE) {
+    echo "<br>Species table inserted successfully";
 } else {
-  echo "Error inserting planets: " . $conn->error;
+    echo "<br>Error: " . $sql . "<br>" . $conn->error;
 }
 
-$sql = "INSERT INTO pilots (pilot_name) VALUES
-  ('Han Solo'),
-  ('Luke Skywalker'),
-  ('Darth Vader'),
-  ('Boba Fett'),
-  ('Palpatine'),
-  ('Nrin Vakil'),
-  ('Arvel Crynyd'),
-  ('Hera Syndulla'),
-  ('Gold Leader'),
-  ('Darklighter'),
-  ('Rogue Squadron Pilot'),
-  ('Lando Calrissian'),
-  ('Grand Moff Tarkin'),
-  ('Admiral Piett'),
-  ('Vader'),
-  ('Qui-Gon Jinn'),
-  ('Obi-Wan Kenobi'),
-  ('Red Leader'),
-  ('Lando Calrissian'),
-  ('Plo Koon'),
-  ('Bail Prestor Organa'),
-  ('Anakin Skywalker'),
-  ('Mace Windu'),
-  ('Admiral Trench'),
-  ('Clone Trooper'),
-  ('Vader'),
-  ('Biker Scout'),
-  ('Darth Maul'),
-  ('Obi-Wan Kenobi'),
-  ('Count Dooku'),
-  ('Jedi Starfighter'),
-  ('Imperial Pilot'),
-  ('Anakin Skywalker'),
-  ('Clone Captain'),
-  ('Sith Sidious'),
-  ('Clone Commander'),
-  ('Captain Needa'),
-  ('Admiral Motti'),
-  ('Nute Gunray');
-";
+// Religion table inserts
+$sql = "INSERT INTO Religion (religion_name) VALUES
+('Jedi'),
+('Sith'),
+('Neither');";
 
 
-  if ($conn->query($sql) === TRUE) {
-    echo " Pilots inserted successfully<br>";
-  } else {
-    echo "Error inserting planets: " . $conn->error;
-  }
-
-
-  $sql = "INSERT INTO droids (droid_name, droid_nickname) VALUES
-  ('R2-D2', 'Artoo'),
-  ('C-3PO', 'Threepio'),
-  ('BB-8', 'BB'),
-  ('R5-D4', 'Red'),
-  ('IG-88', 'Assassin Droid'),
-  ('K-2SO', 'Kaytoo'),
-  ('Chopper', 'C1-10P'),
-  ('L3-37', 'L3'),
-  ('C1-10P', 'Chopper'),
-  ('WED-15', 'Rex'),
-  ('EV-9D9', 'EV-9'),
-  ('R2-Q5', 'R2-Q5'),
-  ('PZ-4CO', 'PZ'),
-  ('T3-M4', 'T3'),
-  ('D-O', 'D-O'),
-  ('T0-B1', 'Toobi'),
-  ('IG-11', 'IG'),
-  ('R2-B1', 'R2-B1'),
-  ('R4-P17', 'R4'),
-  ('L7-20', 'L7'),
-  ('MSE-6', 'MSE-6'),
-  ('T3-A2', 'T3'),
-  ('Q7-T7', 'Q7'),
-  ('GONK', 'GONK'),
-  ('FX-7', 'FX-7'),
-  ('T-3', 'T-3'),
-  ('R1-G4', 'R1'),
-  ('R9-X9', 'R9'),
-  ('R2-A6', 'R2-A6'),
-  ('A-1', 'A-1'),
-  ('V-9', 'V9'),
-  ('Darth Maul\'s Droid', 'Droid'),
-  ('ZED', 'ZED'),
-  ('T7-01', 'T7'),
-  ('R7-A7', 'R7'),
-  ('R9-R4', 'R9-R4'),
-  ('R3-X2', 'R3'),
-  ('R2-X2', 'R2-X2');
-";
-
-if ($conn->query($sql) === TRUE) {
-echo "Table created successfully<br>";
+if ($conn->multi_query($sql) === TRUE) {
+    echo "<br>Religion table inserted successfully";
 } else {
-echo "Error creating table: " . $conn->error;
+    echo "<br>Error: " . $sql . "<br>" . $conn->error;
 }
 
-$sql = "INSERT INTO movies (movie_name, movie_year) VALUES
-  ('Star Wars: A New Hope', 1977),
-  ('Star Wars: The Empire Strikes Back', 1980),
-  ('Star Wars: Return of the Jedi', 1983),
-  ('Star Wars: The Phantom Menace', 1999),
-  ('Star Wars: Attack of the Clones', 2002),
-  ('Star Wars: Revenge of the Sith', 2005),
-  ('Star Wars: The Force Awakens', 2015),
-  ('Star Wars: The Last Jedi', 2017),
-  ('Star Wars: The Rise of Skywalker', 2019);
-";
+// Movies table inserts
+$sql = "INSERT INTO Movies (movie_name, movie_year) VALUES
+('The Phantom Menace', 1999),
+('Attack of the Clones', 2002),
+('Revenge of the Sith', 2005),
+('A New Hope', 1977),
+('The Empire Strikes Back', 1980),
+('Return of the Jedi', 1983),
+('The Force Awakens', 2015),
+('The Last Jedi', 2017),
+('The Rise of Skywalker', 2019),
+('The Clone Wars', 2008),
+('Rogue One', 2016),
+('Solo', 2018),
+('Star Wars Rebels', 2014),
+('The Mandalorian', 2019),
+('The Book of Boba Fett', 2021),
+('Obi-Wan Kenobi', 2022),
+('Andor', 2022),
+('Ahsoka', 2023),
+('Tales of the Jedi', 2022),
+('The Bad Batch', 2021),
+('Visions', 2021),
+('Forces of Destiny', 2017),
+('Resistance', 2018),
+('Droids', 1985),
+('Ewoks', 1985),
+('Holiday Special', 1978),
+('Battle for Endor', 1985),
+('Caravan of Courage', 1984),
+('Jedi Fallen Order', 2019),
+('The High Republic', 2021),
+('The Acolyte', 2024),
+('Rangers of the New Republic', 2024),
+('Children of the Jedi', 1995),
+('Dark Empire', 1991),
+('Heir to the Empire', 1991),
+('Empires End', 1995),
+('Shadows of the Empire', 199);";
 
-if ($conn->query($sql) === TRUE) {
-  echo "Movies inserted successfully.<br>";
+
+if ($conn->multi_query($sql) === TRUE) {
+    echo "<br>Religion table inserted successfully";
 } else {
-  echo "Error inserting movies: " . $conn->error;
+    echo "<br>Error: " . $sql . "<br>" . $conn->error;
 }
 
 
+$sql = "INSERT INTO Ship_models (ship_name) VALUES
+('Millennium Falcon'),
+('X-Wing'),
+('TIE Fighter'),
+('TIE Interceptor'),
+('Star Destroyer');";
 
+if ($conn->multi_query($sql) === TRUE) {
+    echo "<br>Ships table inserted successfully";
+} else {
+    echo "<br>Error: " . $sql . "<br>" . $conn->error;
+}
+
+// Droids table inserts
+$sql = "INSERT INTO Droids (droid_name) VALUES
+('C-3PO' ),
+('R2-D2'),
+('BB-8'),
+('D-O');";
+
+if ($conn->multi_query($sql) === TRUE) {
+    echo "<br>Droids table inserted successfully";
+} else {
+    echo "<br>Error: " . $sql . "<br>" . $conn->error;
+}
 
 
 
