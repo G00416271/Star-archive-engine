@@ -137,7 +137,7 @@ function submit(){
 
 
       <!-- species -->
-      <label for="species_name">Species</label>
+       <label for="species_name">Species</label>
       <input class="formQ" type="text" id="species_name" name="species_name" onkeyup="getFiles('species_name' ,'txtHint_speies_name')";>
 
        <ul class="dropdown"   id="txtHint_speies_name"></ul>
@@ -147,38 +147,38 @@ function submit(){
       <label for="religion_name">Religion</label>
       <select class="formQ" name="religion_name" id="religion_name">
       <option value=""></option>
-      <option value="Jedi">Jedi</option>
-      <option value="Sith">Sith</option>
+      <option value="Jedi">jedi</option>
+      <option value="Sith">sith</option>
       </select>
 
        <ul class="dropdown"  id="txtHint_religion_name"></ul>
 
 
       <!-- droid   -->
-      <label for="droid_name">Droid</label>
+       <label for="droid_name">Droid</label>
       <input class="formQ" type="text" id="droid_name" name="droid_name" onkeyup="getFiles('droid_name' , 'txtHint_droid_name')">
 
-       <ul class="dropdown" id="txtHint_droid_name"></ul>
+       <ul class="dropdown" id="txtHint_droid_name"></ul> 
 
 
       <!-- ship_model -->
       <label for="ship_name">Ship </label>
       <input class="formQ" type="text" id="ship_name" name="ship_name" onkeyup="getFiles('ship_name' , 'txtHint_ship_name')">
 
-       <ul class="dropdown"   id="txtHint_ship_name"></ul>
+       <ul class="dropdown"   id="txtHint_ship_name"></ul> 
 
 
-      <!-- pilot -->
+      <!-- pilot-->
       <label for="pilot_name">Pilot</label>
       <input class="formQ" type="text" id="pilot_name" name="pilot_name" onkeyup="getFiles('pilot_name' , 'txtHint_pilot_name')">
 
-       <ul class="dropdown" id="txtHint_pilot_name"></ul>
+       <ul class="dropdown" id="txtHint_pilot_name"></ul> 
 
       <!-- movies -->
       <label for="movie_name">Movies</label>
       <input class="formQ" type="text" id="movie_name" name="movie_name" onkeyup="getFiles('movie_name','txtHint_movie_name')">
 
-       <ul class="dropdown"   class="dropdown"id="txtHint_movie_name"></ul>
+       <ul class="dropdown"   class="dropdown"id="txtHint_movie_name"></ul> 
 
        
     </form>
