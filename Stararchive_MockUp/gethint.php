@@ -17,8 +17,6 @@ $species_hint = isset($_POST[$formQuestion]) ? htmlspecialchars($_POST[$formQues
 $droid_hint = isset($_POST[$formQuestion]) ? htmlspecialchars($_POST[$formQuestion]) : '';
 //Ship
 $ship_hint = isset($_POST[$formQuestion]) ? htmlspecialchars($_POST[$formQuestion]) : '';
-//pilot
-$pilot_hint = isset($_POST[$formQuestion]) ? htmlspecialchars($_POST[$formQuestion]) : '';
 //movies
 $movie_hint = isset($_POST[$formQuestion]) ? htmlspecialchars($_POST[$formQuestion]) : '';
 
@@ -41,10 +39,7 @@ elseif (($formQuestion == 'droid_name')and strlen($droid_hint) > 0) {
     $sql2 = "SELECT droid_name FROM droids WHERE LOWER(droid_name) LIKE '%$droid_hint%'";
 
 }elseif (($formQuestion == 'ship_name')and strlen($ship_hint) > 0) {
-    $sql2 = "SELECT ship_name FROM ship_models WHERE LOWER(ship_name) LIKE '%$ship_hint%'";
-
-}elseif (($formQuestion == 'pilot_name')and strlen($pilot_hint) > 0) {
-    $sql2 = "SELECT pilot_name FROM pilots WHERE LOWER(pilot_name) LIKE '%$pilot_hint%'";
+    $sql2 = "SELECT ship_name FROM ships WHERE LOWER(ship_name) LIKE '%$ship_hint%'";
 
 }elseif (($formQuestion == 'movie_name')and strlen($movie_hint) > 0) {
     $sql2 = "SELECT movie_name FROM movies WHERE LOWER(movie_name) LIKE '%$movie_hint%'";

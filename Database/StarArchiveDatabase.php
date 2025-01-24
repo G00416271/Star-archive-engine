@@ -151,10 +151,13 @@ echo "Error creating table: ". $conn -> error;
 
 
 
+
+
 // Create Characters table
 $sql = "CREATE TABLE characters ( 
   character_id INT AUTO_INCREMENT PRIMARY KEY,
   char_name VARCHAR(50) NOT NULL, 
+  character_icon TEXT,
   religion_id INT,
   planet_id INT,
   species_id INT,

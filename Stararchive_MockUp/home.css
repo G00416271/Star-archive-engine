@@ -1,18 +1,22 @@
 html {
-    background-color: rgb(255, 0, 0);
+    background-color:white;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 15pt;
 }
 
 body :not(head){
-    display: grid;
-    place-items: center;
+    display:flex;
+    place-items:center;
+    flex-wrap:wrap;
+    flex-direction: column;
+    justify-content:center;
+
 }
 
 
 #search_archive, .formQ{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     box-shadow: 0 0 2rem rgba(72, 11, 11, 0.067);
     width: 15rem;
@@ -20,10 +24,17 @@ body :not(head){
 }
 .dropdown{
     position: relative;
-    overflow-y: auto; /* Add scrolling for large lists */
-    min-width: 300px; /* Adjust to desired width */
-    max-height: 150px; /* Limit height for overflow */
+    overflow-y: auto;
+    min-width: 300px;
+    max-height: 150px;
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 20%;
+    margin-top: 5px;
+    z-index:1;
 }
+
+
 #search_archive{
     padding-left:10rem;
     padding-right:10rem;
@@ -32,11 +43,12 @@ body :not(head){
 
 
 .dropdown-content{
-    display: none; 
+    display: flex; 
+    
     position: relative; 
     background-color: #f9f9f9; 
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1000; 
+    z-index: 2; 
   }
 
   li.dropdown-content{
@@ -50,4 +62,20 @@ body :not(head){
 
   li.dropdown-content:hover {
     background-color: #ddd; 
+}
+
+#search-btn{
+   padding: 5% 8% 5% 8%;
+   border: none;
+   margin: 5%;
+   border-radius:30px;
+   background-color: rgb(162, 199, 255);
+   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+   transition-duration: 0.4s;
+
+}
+
+#search-btn:hover{
+    background-color:rgb(112, 165, 246);
+    color:white;
 }

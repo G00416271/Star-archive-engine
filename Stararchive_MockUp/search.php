@@ -1,92 +1,5 @@
 <html>
 <head>
-<script>
-
-function close(){
-    let dropdowns = document.getElementsByClassName("dropdown");
-      for (let i = 0; i < dropdowns.length; i++) {
-      dropdowns[i].innerHTML = "";
-      }
-  }
-  
-  let set_location = "";
-  let set_value = "";
-
-
-  function locate(location , value){ 
-      set_location = location; 
-      set_value = value;
-    }
-  
-  function getFiles(formQuestion,location){
-    close();
-    const formData = new FormData(document.getElementById('search_archive'));
-    formData.append('formQuestion', formQuestion);
-    formData.append('location', location);
-    let results = [];
-
-    fetch('gethint.php',{ 
-    method: 'POST',
-    body: formData
-    })
-    .then(response => {
-      if(response.ok){
-        return response.text();
-      }
-      throw new Error('Network response was not ok.')
-    })
-    .then(data =>{      
-      if (data.trim() !== "") {
-        document.getElementById(location).innerHTML = data;
-      }else{
-        document.getElementById(location).innerHTML = "";
-      }
-    })
-    .catch((error) =>{
-      console.error('Error:',error);
-    });
-
-    return formQuestion
-}
-
-function autofill(valueOfAutofill) {
-  close();
-  
-  let location_of_element = (set_location.split("," )[1]);
-  
-  document.getElementById(location_of_element).value = valueOfAutofill;
-
-}
-
-var formQuestion = getFiles();
-
-
-function submit(){
-    close();
-    const formData = new FormData(document.getElementById('search_archive'));
-    fetch('resultShow.php',{ 
-    method: 'POST',
-    body: formData
-    })
-    .then(response => {
-      if(response.ok){
-        return response.text();
-      }
-      throw new Error('Network response was not ok.')
-    })
-    .then(data =>{      
-      if (data.trim() !== "") {
-        document.getElementById('resultShow').innerHTML = data;
-      }else{
-        document.getElementById('resultShow').innerHTML = "nothing was found, this might be broken";
-      }
-    })
-    .catch((error) =>{
-      console.error('Error:',error);
-    });
-  }
-</script>
-
 
 <title>Home</title>
 <meta charset="UTF-8">
@@ -99,41 +12,60 @@ function submit(){
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <!--CSS-->
 <link href="navbar.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="home.css">
+<link rel="stylesheet" type="text/css" href="search.css">
+<link rel="stylesheet" type="text/css" href="resultShow.css">
 
 <!--Java Script-->
 <script src="navbar.js"></script>
 <script src="searchArchive.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../js/functions.js"></script>
 
 
+<?php session_start();
+include 'cartFunctions.php';
+
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = [];
+}
+$cart_info = countItemsAndPrice();
+?>
 
 
 <div class="logo" id="logobar">
     <img src="resources/Logo/Star_logo_Cropped.gif" id="logo-gif">
     <img src="resources/Logo/Star_logo_static.jpg" id="logo-static">
-
     <div class="logo" id="text_star_archive">Star Archive</div>
-  </div>
-
-
+</div>
+<nav class="navbar">
+    <ul class="navbar-menu">
+        <li><a href="">Search</a></li>
+        <li><a href="#">Planets</a></li>
+        <li><a href="#">Account</a></li>
+        <li><a href="#">About</a></li>
+    </ul>
+    <a href = "cart.php">
+    <div id="cart">
+        <img src="../resources/images/shopping-cart.png" alt="Shopping cart"  id="cart-icon" >
+    <p>(<?php echo $cart_info['no_of_items'];?>)</p>
+    </a>
+    </div>
+</nav>
 
 
 
 <body>
-  <div id="hyperspace">
+    <div id="hyperspace">
     <form id="search_archive" >
-      <!-- name -->
-      <label for="char_name">Name</label>
-      <input class="formQ" autofill="off" type="text" id="char_name" name="char_name" onkeyup="getFiles('char_name' , 'txtHint_char_name')">
-      <ul  class="dropdown" id="txtHint_char_name"></ul>
-
 
       <!-- planet -->
       <label for="planet_name">Planet</label>
+      <div id="planet" class="formBox">
       <input class="formQ" type="text" id="planet_name" name="planet_name" onkeyup="getFiles('planet_name','txtHint_planet_name')">
-
+        <button onclick="submit(); autoScroll()">➡</button>
+        </div>
        <ul class="dropdown"   id="txtHint_planet_name"></ul>
+       
 
 
       <!-- species -->
@@ -167,30 +99,32 @@ function submit(){
 
        <ul class="dropdown"   id="txtHint_ship_name"></ul> 
 
-
-      <!-- pilot-->
-      <label for="pilot_name">Pilot</label>
-      <input class="formQ" type="text" id="pilot_name" name="pilot_name" onkeyup="getFiles('pilot_name' , 'txtHint_pilot_name')">
-
-       <ul class="dropdown" id="txtHint_pilot_name"></ul> 
-
       <!-- movies -->
       <label for="movie_name">Movies</label>
       <input class="formQ" type="text" id="movie_name" name="movie_name" onkeyup="getFiles('movie_name','txtHint_movie_name')">
 
        <ul class="dropdown"   class="dropdown"id="txtHint_movie_name"></ul> 
 
+
+    <div id="nameOfChar">
+        <!-- name -->
+        <label for="char_name">Name</label>
+        <input class="formQ" autofill="off" type="text" id="char_name" name="char_name" onkeyup="getFiles('char_name' , 'txtHint_char_name')">
+        <ul  class="dropdown" id="txtHint_char_name"></ul>
+    </div>
+
        
     </form>
+    </div>
 
-    <button type="button" onclick="submit()">submit</button>
+    <button id="search-btn" type="button" onclick="submit(); autoScroll()">submit</button>
 
 
        <div id="resultShow"></div>
-  </div>
 
+    
 
   </body>
-
+<script src="../js/home.js"></script>
 
 </html>

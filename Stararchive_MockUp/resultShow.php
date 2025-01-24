@@ -16,6 +16,7 @@ $droid = $_POST['droid_name'] ?? '';
 $ship_model = $_POST['ship_name'] ?? '';
 $movies = $_POST['movie_name'] ?? '';
 
+
 // Construct SQL query dynamically based on provided filters
 if (!empty($name)) {
     $conditions[] = "Characters.char_name LIKE '%" . $conn->real_escape_string($name) . "%'";
@@ -68,34 +69,44 @@ LEFT JOIN Ships ON Characters.ship_id = Ships.ship_id
 ";
 
 
-
 // If there are any conditions, append them to the SQL query
 if (!empty($conditions)) {
-    $sql .= " WHERE " . implode(" OR ", $conditions );
-} else {
-    echo "yeaaaaa....this mf empty asl";
-}
+    $sql .= " WHERE " . implode(" AND ", $conditions );
 
 
-
-// Execute the query
+    // Execute the query
 $result2 = $conn->query($sql);
 
 if ($result2->num_rows > 0) {
     while ($row = $result2->fetch_assoc()) {
-        echo "Name: " . htmlspecialchars($row['char_name']?? 'UNKOWN') . "<br>";
-        echo "Planet: " . htmlspecialchars($row['planet_name']?? 'UNKOWN') . "<br>";
-        echo "Species: " . htmlspecialchars($row['species_name']?? 'UNKOWN') . "<br>";
-        echo "Religion: " . htmlspecialchars($row['religion_name']?? 'UNKOWN') . "<br>";
-        echo "Droid: " . htmlspecialchars($row['droid_name']?? 'UNKOWN') . "<br>";
-        echo "Ship Model: " . htmlspecialchars($row['ship_name']?? 'UNKOWN') . "<br>";
-        echo "Movies: " . htmlspecialchars($row['movie_name']?? 'UNKOWN') . "<br>";
+        $name = htmlspecialchars($row['char_name']?? 'UNKOWN');
+        $id =  htmlspecialchars($row['character_id']?? 'UNKOWN');
+        echo "<div class='result' id=".$name.">" ;
+        echo '<img src="../resources/character profiles/'.$name.'.png" onerror="this.onerror=null; this.src=\'../resources/character profiles/unknown character.png\';">';
+        echo "<div id='resultTXT' >";
+        echo "<p>Name: " . htmlspecialchars($row['char_name']?? 'UNKOWN') . "<br></p>";
+        echo "<p>Planet: " . htmlspecialchars($row['planet_name']?? 'UNKOWN') . "<br></p>";
+        echo "<p>Species: " . htmlspecialchars($row['species_name']?? 'UNKOWN') . "<br></p>";
+        echo "<p>Religion: " . htmlspecialchars($row['religion_name']?? 'UNKOWN') . "<br></p>";
+        echo "<p>Droid: " . htmlspecialchars($row['droid_name']?? 'UNKOWN') . "<br></p>";
+        echo "<p>Ship Model: " . htmlspecialchars($row['ship_name']?? 'UNKOWN') . "<br></p>";
+        echo "<p>Movies: " . htmlspecialchars($row['movie_name']?? 'UNKOWN') . "<br></p>";
+        echo "<button id='addToCart' onclick='addtoCart(".$id.")'> Add to cart</button>";
+        echo "</div></div>";
+        echo '<button id="scrollToTopBtn" onclick="scrollToTop()">↑</button>
+';
         echo "<hr>";
 
      }
 } else {
     echo "No results found.";
 }
+} else {
+    echo "No search filters entered...";
+}
+
+
+
 
 $conn->close();
 ?>

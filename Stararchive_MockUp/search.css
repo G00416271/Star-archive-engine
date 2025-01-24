@@ -1,0 +1,136 @@
+/* General styling */
+body {
+    font-family: 'Inconsolata', sans-serif;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Hyperspace container */
+#hyperspace {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Form elements */
+form label {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.formQ {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    color: #000;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+.formQ:focus {
+    border: 2px solid #ffcc00;
+    background: #fff;
+}
+
+select.formQ {
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Dropdown styling */
+.dropdown {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    background: #222;
+    border: 1px solid #ffcc00;
+    border-radius: 5px;
+}
+
+.dropdown li {
+    padding: 10px;
+    border-bottom: 1px solid #ffcc00;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dropdown li:hover {
+    background: #ffcc00;
+    color: #000;
+}
+
+/* Search button */
+#search-btn {
+    display: block;
+    width: 50%;
+    padding: 10px;
+    margin: 20px auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#search-btn:hover {
+    background: #ffaa00;
+}
+
+/* Result show section */
+#resultShow {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    font-size: 1.2rem;
+}
+
+
+
+
+.formBox{
+    display: flex;
+    flex-direction: row;
+}
+
+.formBox Button{
+    display: block;
+    width: 10%;
+    height:auto;
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: rgb(255, 204, 0);
+    border: none;
+    border-radius: 5px;
+    color: #000;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0);
+    
+}
+
+.formBox Button:hover{
+    background: #ffaa00;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+    
+}

@@ -1,0 +1,73 @@
+/* Result show section */
+#resultShow {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    font-size: 1.2rem;
+}
+
+/* Individual result styling */
+.result {
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.result img {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 2px solid #ffcc00;
+    margin-bottom: 15px;
+}
+
+.result p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+#addToCart {
+    background: #ffcc00;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#addToCart:hover {
+    background: #ffaa00;
+}
+
+hr {
+    border: 1px solid #ffcc00;
+    margin: 20px 0;
+}
+
+#scrollToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background: #ffcc00;
+    border: none;
+    border-radius: 50px;
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(8, 7, 7, 0.3);
+    /*display: none;  Initially hidden */
+    transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+#scrollToTopBtn:hover {
+    background: #ffaa00;
+    opacity: 0.9;
+}
