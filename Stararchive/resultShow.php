@@ -53,6 +53,7 @@ if (!empty($ship_model)) {
 $sql = "SELECT 
     Characters.character_id,
     Characters.char_name,
+    Characters.file_price,
     Species.species_name,
     Planets.planet_name,
     Religions.religion_name,
@@ -80,7 +81,8 @@ $result2 = $conn->query($sql);
 if ($result2->num_rows > 0) {
     while ($row = $result2->fetch_assoc()) {
         $name = htmlspecialchars($row['char_name']?? 'UNKOWN');
-        $id =  htmlspecialchars($row['character_id']?? 'UNKOWN');
+        $char_id = htmlspecialchars($row['character_id']?? 'UNKNOWN');
+        $file_price = htmlspecialchars($row['file_price']?? 'UNKOWN');
         echo "<div class='result' id=".$name.">" ;
         echo '<img src="../resources/character profiles/'.$name.'.png" onerror="this.onerror=null; this.src=\'../resources/character profiles/unknown character.png\';">';
         echo "<div id='resultTXT' >";
@@ -91,7 +93,8 @@ if ($result2->num_rows > 0) {
         echo "<p>Droid: " . htmlspecialchars($row['droid_name']?? 'UNKOWN') . "<br></p>";
         echo "<p>Ship Model: " . htmlspecialchars($row['ship_name']?? 'UNKOWN') . "<br></p>";
         echo "<p>Movies: " . htmlspecialchars($row['movie_name']?? 'UNKOWN') . "<br></p>";
-        echo "<button id='addToCart' onclick='addtoCart(".$id.")'> Add to cart</button>";
+        echo "<p>price: €" . $file_price."<br></p>";
+        echo "<button id='addToCart' onclick='addToCart(".$char_id.")'> Add to cart</button>";
         echo "</div></div>";
         echo '<button id="scrollToTopBtn" onclick="scrollToTop()">↑</button>
 ';

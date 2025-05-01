@@ -74,6 +74,7 @@ function submit(){
     .then(data =>{      
       if (data.trim() !== "") {
         document.getElementById('resultShow').innerHTML = data;
+  
       }else{
         document.getElementById('resultShow').innerHTML = "nothing was found, this might be broken";
       }
@@ -83,9 +84,10 @@ function submit(){
     });
   }
 
-  function addtoCart(id){
+  function addToCart(id){
     const formData = new FormData();
     formData.append("id",id);
+    console.log('formdata' + formData.get("id"));
 
     fetch("cartcount.php", {
       method:"POST",
@@ -100,6 +102,7 @@ function submit(){
       })
       .then((data) => {
         document.getElementById("cart_response").innerHTML = data;
+        
       })
       .catch((error) => {
         console.error("Error: " , error);
