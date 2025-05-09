@@ -26,7 +26,7 @@
     document.getElementById('logoutBtn').addEventListener('click', function() {
         formdata = new FormData;
         formdata.append('action', 'logout');   
-        fetch('../Backend/auth.php', {
+        fetch('../Backend/logout.php', {
             method: 'POST',
             body: formdata
         }).then(response => response.text())
