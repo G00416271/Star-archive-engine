@@ -74,30 +74,7 @@ function showCart(){
   }
 
   function checkoutItems(total_price){
-    const formData = new FormData();
-    formData.append('total_price',total_price);
-
-    fetch("checkout.php", {
-      method:"POST",
-      body:formData,
-    })
-
-      .then((response) =>{
-        if (response.ok){
-          return response.text();
-        }
-        throw new Error("Network response was not ok.")
-      })
-      .then((data) => {
-        console.log(data);
-        document.getElementById("cart_change").innerHTML = data;
-        
-      })
-      .catch((error) => {
-        console.error("Error: " , error);
-      });
+    window.location.href = "../Stararchive/confirmed.php" 
   }
-
-  
 
   
