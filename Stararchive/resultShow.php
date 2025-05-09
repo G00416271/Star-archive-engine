@@ -94,7 +94,7 @@ if ($result2->num_rows > 0) {
         echo "<p>Ship Model: " . htmlspecialchars($row['ship_name']?? 'UNKOWN') . "<br></p>";
         echo "<p>Movies: " . htmlspecialchars($row['movie_name']?? 'UNKOWN') . "<br></p>";
         echo "<p>price: €" . $file_price."<br></p>";
-        echo "<button id='addToCart' onclick='addToCart(".$char_id.")'> Add to cart</button>";
+        echo "<button class='addToCartBtn' id='addToCart' onclick='addToCart(".$char_id.")'> Add to cart</button>";
         echo "</div></div>";
         echo '<button id="scrollToTopBtn" onclick="scrollToTop()">↑</button>
 ';

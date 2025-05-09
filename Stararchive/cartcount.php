@@ -47,7 +47,8 @@
         }
     }else{
         echo 'No results found.';
-        echo ("id: $id");
+        //echo ("id: $id");
+        //var_dump($_SESSION);
     }
 
     

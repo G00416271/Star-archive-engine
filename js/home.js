@@ -74,7 +74,6 @@ function submit(){
     .then(data =>{      
       if (data.trim() !== "") {
         document.getElementById('resultShow').innerHTML = data;
-  
       }else{
         document.getElementById('resultShow').innerHTML = "nothing was found, this might be broken";
       }
@@ -108,3 +107,58 @@ function submit(){
         console.error("Error: " , error);
       });
   }
+
+
+  document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('addToCartBtn')) {
+
+      info = new FormData();
+      info.append('action' , 'count')
+      
+      fetch('../Stararchive/search.php', {
+        method: 'POST',
+        body: info
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then(data => {
+        //console.log('Count:', data);
+        document.getElementById('countnum').innerHTML = '(' + data + ')';
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  });
+
+const isActive = false;
+
+
+const accountBtn = document.getElementById('account');
+accountBtn.addEventListener('click', function(event) {
+  event.preventDefault();
+  const formdata = new FormData();
+  formdata.append('action', 'checkActive');
+
+  fetch('../backend/checkUser.php', {
+    method: 'POST',
+    body: formdata
+  })
+  .then(response => response.text())
+  .then(data => {
+    if (data.trim() === 'true'){
+      console.log('User is logged in', data);
+      window.location.href = "account.php";
+    } else {
+      console.log('User is not logged in', data);
+      window.location.href = "signuplogin.php";
+    }
+  })
+  .catch(error => {
+    console.error('Fetch error:', error);
+  });
+});

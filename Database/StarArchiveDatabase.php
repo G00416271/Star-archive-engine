@@ -68,6 +68,23 @@ if ($conn->connect_error) {
 //Tables
 
 
+//Users
+$sql = "CREATE TABLE users (
+  user_id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+";
+if ($conn->query($sql) === TRUE) {
+  echo "Users table created successfully<br>";
+} else {
+  echo "Error creating table: " . $conn->error;
+}
+
+
+
 
 //Planets
 $sql = "CREATE TABLE planets (
@@ -95,7 +112,7 @@ $sql = "CREATE TABLE religions (
 if($conn ->query($sql) === TRUE) {
     echo "Religion created successfully<br>";
   }else{
-   echo "Error creating table: ". $conn -> error;
+    echo "Error creating table: ". $conn -> error;
   }
 
 //Species

@@ -1,3 +1,25 @@
+<?php session_start();
+include 'cartFunctions.php';
+
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = [];
+}
+
+$cart_info = countItemsAndPrice();
+if (isset($_POST['action']) && $_POST['action'] == 'count') {
+    echo $cart_info['no_of_items'];
+    exit;
+}
+
+
+
+
+
+
+?>
+
+
+
 <html>
 <head>
 
@@ -22,15 +44,6 @@
 <script src="../js/functions.js"></script>
 
 
-<?php session_start();
-include 'cartFunctions.php';
-
-if(!isset($_SESSION['cart'])){
-    $_SESSION['cart'] = [];
-}
-$cart_info = countItemsAndPrice();
-?>
-
 
 <div class="logo" id="logobar">
     <img src="resources/Logo/Star_logo_Cropped.gif" id="logo-gif">
@@ -41,13 +54,16 @@ $cart_info = countItemsAndPrice();
     <ul class="navbar-menu">
         <li><a href="">Search</a></li>
         <li><a href="#">Planets</a></li>
-        <li><a href="#">Account</a></li>
+        <li><a id='account'>Account</a></li>
         <li><a href="#">About</a></li>
     </ul>
+<!-- setcookie("active", "", time() - 3600)" -->
+
+    <div id="username">Hey, <?php echo $_SESSION['username']??'';?> let's explore the galaxy!</div>
     <a href = "cart_table.php">
     <div id="cart">
         <img src="../resources/images/shopping-cart.png" alt="Shopping cart"  id="cart-icon" >
-    <p>(<?php echo $cart_info['no_of_items'];?>)</p>
+    <p id="countnum">(<?php echo $cart_info['no_of_items'];?>)</p>
     </a>
     </div>
 </nav>

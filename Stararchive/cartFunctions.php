@@ -10,7 +10,7 @@ function countItemsAndPrice(): array{
 
     return [
         'no_of_items' => $no_of_items,
-        'total_price' => $total_price
+        'total_price' => $total_price 
     ];
 }
 
